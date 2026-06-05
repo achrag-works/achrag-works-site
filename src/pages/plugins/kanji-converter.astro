@@ -1,0 +1,135 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="Kanji Number Converter" description="ACHRAG Kanji Number Converter — Free WordPress plugin for classical Japanese publishing">
+  <style>
+    .breadcrumb { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .plugin-hero { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
+    .plugin-hero-icon { font-size: 3.5rem; }
+    h1 { font-size: 1.8rem; font-weight: 400; margin-bottom: 0.3rem; }
+    .version { color: var(--text-muted); font-size: 0.9rem; }
+    .download-section {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+    .download-section h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1.5rem; letter-spacing: 0.05em; }
+    .download-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .download-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+    }
+    .download-card h3 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.5rem; }
+    .download-card p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
+    .dl-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .dl-btn.secondary {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+    .features-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .features-table th {
+      text-align: left;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .features-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.92rem;
+    }
+    .features-table tr:last-child td { border-bottom: none; }
+    h2.section { font-size: 1.1rem; font-weight: 500; margin: 2.5rem 0 1rem; }
+    .demo-banner {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 2rem 0;
+    }
+    .demo-banner p { font-size: 0.95rem; color: var(--text-muted); }
+    .demo-banner a {
+      color: var(--accent2);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      margin-left: 2rem;
+    }
+    @media (max-width: 600px) {
+      .download-grid { grid-template-columns: 1fr; }
+      .demo-banner { flex-direction: column; gap: 1rem; }
+      .demo-banner a { margin-left: 0; }
+    }
+  </style>
+
+  <p class="breadcrumb"><a href="/plugins">← Plugins</a></p>
+
+  <div class="plugin-hero">
+    <span class="plugin-hero-icon">漢</span>
+    <div>
+      <h1>ACHRAG Kanji Number Converter</h1>
+      <p class="version">Version 2.8 — Free — GPL v2</p>
+    </div>
+  </div>
+
+  <p>Automatically converts Arabic numerals in your WordPress post titles and content into traditional Japanese Kanji numerals (漢数字). Developed by ACHRAG for classical Japanese publishing.</p>
+
+  <div class="download-section">
+    <h2>DOWNLOAD</h2>
+    <div class="download-grid">
+      <div class="download-card">
+        <h3>Standard Edition</h3>
+        <p>English UI. Compatible with the WordPress Plugin Directory. Recommended for most users.</p>
+        <a href="https://wordpress.org/plugins/achrag-kansuji-converter/" class="dl-btn" target="_blank">WordPress.org →</a>
+      </div>
+      <div class="download-card">
+        <h3>Original Edition</h3>
+        <p>Classical Japanese interface, as written by ACHRAG's Sacred Resonance Division (霊響部門). For those who appreciate the aesthetic.</p>
+        <a href="https://github.com/achrag-works/achrag-kansuji-converter" class="dl-btn secondary" target="_blank">GitHub →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-banner">
+    <p>See the plugin running on a live WordPress installation.</p>
+    <a href="#" target="_blank">View Demo Site →</a>
+  </div>
+
+  <h2 class="section">Features</h2>
+  <table class="features-table">
+    <thead>
+      <tr><th>Feature</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Standard Kanji</td><td>Converts to 十, 二十三, 二千二十六</td></tr>
+      <tr><td>Formal Daiji (大字)</td><td>Converts to 拾, 弐拾参, 弐千弐拾六</td></tr>
+      <tr><td>Exception protection</td><td>Wrap numbers with ◆ to skip conversion (e.g. phone numbers)</td></tr>
+      <tr><td>Emergency kill-switch</td><td>Instantly suspend all conversions and restore Arabic numerals</td></tr>
+      <tr><td>Live preview</td><td>See results before saving</td></tr>
+      <tr><td>Era selector</td><td>Preview dates under any Japanese era from 大化 (645 AD) to 令和</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section">License</h2>
+  <p style="color: var(--text-muted); font-size: 0.92rem;">GPL v2 — Free to use, modify, and distribute. <a href="https://www.gnu.org/licenses/gpl-2.0.html" style="color: var(--accent);" target="_blank">Full license text →</a></p>
+</Layout>

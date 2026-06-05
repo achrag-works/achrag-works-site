@@ -1,0 +1,119 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Home">
+  <style>
+    .hero {
+      text-align: center;
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .hero-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 300;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    .hero-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 0.75rem 2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .section-title {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+    .plugin-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      display: flex;
+      gap: 1.5rem;
+    }
+    .plugin-icon { font-size: 2.5rem; flex-shrink: 0; }
+    .plugin-card h2 { font-size: 1.2rem; font-weight: 500; margin-bottom: 0.5rem; }
+    .plugin-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem; }
+    .tag {
+      display: inline-block;
+      background: var(--bg2);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 3px;
+      margin-right: 0.4rem;
+    }
+    .card-link { color: var(--accent); font-size: 0.9rem; text-decoration: none; display: inline-block; margin-top: 1rem; font-weight: 500; }
+    .about {
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .about h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.75rem; }
+    .about p { color: var(--text-muted); font-size: 0.92rem; }
+    .about a { color: var(--accent); }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.8rem; }
+      .about { grid-template-columns: 1fr; }
+      .plugin-card { flex-direction: column; }
+    }
+  </style>
+
+  <section class="hero">
+    <p class="hero-label">ACHRAG Works</p>
+    <h1>Tools for Japanese<br>Classical Publishing</h1>
+    <p>Free WordPress plugins crafted by ACHRAG for sites that honor the elegance of classical Japanese prose.</p>
+    <a href="/plugins" class="hero-btn">View Plugins →</a>
+  </section>
+
+  <p class="section-title">Featured Plugin</p>
+  <div class="plugin-card">
+    <div class="plugin-icon">漢</div>
+    <div>
+      <h2>ACHRAG Kanji Number Converter</h2>
+      <p>Automatically converts Arabic numerals in post titles and content into traditional Japanese Kanji numerals. Supports standard (十, 百, 千) and formal Daiji (拾, 佰, 仟) styles.</p>
+      <div>
+        <span class="tag">WordPress</span>
+        <span class="tag">Japanese</span>
+        <span class="tag">Free</span>
+        <span class="tag">GPL v2</span>
+      </div>
+      <a href="/plugins/kanji-converter" class="card-link">Learn more →</a>
+    </div>
+  </div>
+
+  <div class="about">
+    <div>
+      <h3>About ACHRAG Works</h3>
+      <p>A collection of free, open-source WordPress plugins developed internally by ACHRAG for our Japanese-language publications. Released publicly for anyone who shares our appreciation for classical Japanese typography.</p>
+    </div>
+    <div>
+      <h3>Open Source</h3>
+      <p>All plugins are released under GPL v2. Source code is available on <a href="https://github.com/achrag-works">GitHub</a>. Contributions and feedback are welcome.</p>
+    </div>
+  </div>
+</Layout>

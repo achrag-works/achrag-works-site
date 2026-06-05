@@ -1,0 +1,106 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = "ACHRAG Works — WordPress plugins by ACHRAG" } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title} | ACHRAG Works</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f8f6f1;
+      --bg2: #f0ece3;
+      --text: #2c2a26;
+      --text-muted: #7a7570;
+      --accent: #5c6e4a;
+      --accent2: #8a6a3a;
+      --border: #ddd9d0;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-left: 1.5rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--accent); }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">ACHRAG <span>Works</span></a>
+    <nav>
+      <a href="/plugins">Plugins</a>
+      <a href="https://www.achrag.org/" target="_blank">ACHRAG.org</a>
+      <a href="https://github.com/achrag-works" target="_blank">GitHub</a>
+    </nav>
+  </header>
+  <main>
+    <slot />
+  </main>
+  <footer>
+    <p>&copy; 2026 <a href="https://www.achrag.org/">ACHRAG</a> — Advanced Civilizational Heritage Research & Analysis Group</p>
+  </footer>
+</body>
+</html>
