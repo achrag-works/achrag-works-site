@@ -1,0 +1,69 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="ACHRAG Responsive Slider" description="ACHRAG Responsive Slider — Free WordPress plugin for mobile-compatible image sliders">
+  <style>
+    .breadcrumb { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .plugin-hero { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
+    .plugin-hero-icon { font-size: 3.5rem; }
+    h1 { font-size: 1.8rem; font-weight: 400; margin-bottom: 0.3rem; }
+    .version { color: var(--text-muted); font-size: 0.9rem; }
+    .screenshot-wrap { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 2rem 0; background: var(--bg2); }
+    .screenshot-wrap img { width: 100%; display: block; }
+    .download-section { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; margin: 2rem 0; }
+    .download-section h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1.5rem; letter-spacing: 0.05em; }
+    .dl-primary { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--accent); color: white; padding: 0.75rem 1.8rem; border-radius: 6px; text-decoration: none; font-size: 0.95rem; font-weight: 500; margin-bottom: 0.8rem; }
+    .dl-note { font-size: 0.82rem; color: var(--text-muted); margin-top: 1rem; line-height: 1.7; }
+    .features-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .features-table th { text-align: left; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); padding: 0.5rem 1rem; border-bottom: 1px solid var(--border); }
+    .features-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
+    .features-table tr:last-child td { border-bottom: none; }
+    h2.section { font-size: 1.1rem; font-weight: 500; margin: 2.5rem 0 1rem; }
+    .supervised { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; }
+  </style>
+
+  <p class="breadcrumb"><a href="/plugins">← Plugins</a></p>
+
+  <div class="plugin-hero">
+    <span class="plugin-hero-icon">🎠</span>
+    <div>
+      <h1>ACHRAG Responsive Slider</h1>
+      <p class="version">Version 1.7.4 — Free — GPL v2</p>
+      <p class="supervised">Supervised by jkt</p>
+    </div>
+  </div>
+
+  <p>A mobile-compatible responsive image slider for WordPress. Supports carousel and normal display modes with fully customizable image size, slide interval, and link URLs per image. Works with the SWELL theme and standard WordPress shortcode.</p>
+
+  <div class="screenshot-wrap">
+    <img src="/achrag-responsive-slider-screenshot.jpg" alt="ACHRAG Responsive Slider admin settings" />
+  </div>
+
+  <div class="download-section">
+    <h2>DOWNLOAD</h2>
+    <a href="/achrag-responsive-slider.zip" class="dl-primary">⬇ Download ZIP</a>
+    <p class="dl-note">
+      Upload via WordPress Admin → Plugins → Add New → Upload Plugin.<br>
+      No external dependencies required.
+    </p>
+  </div>
+
+  <h2 class="section">Features</h2>
+  <table class="features-table">
+    <thead><tr><th>Feature</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Carousel & Normal modes</td><td>Switch between multi-slide carousel and standard single-slide display</td></tr>
+      <tr><td>Responsive</td><td>Automatically adjusts layout for mobile (single column) and desktop</td></tr>
+      <tr><td>Customizable size</td><td>Set image width and height in pixels from the admin panel</td></tr>
+      <tr><td>Auto-play interval</td><td>Configure slide duration in seconds</td></tr>
+      <tr><td>Link per image</td><td>Each slide supports an individual link URL and alt text</td></tr>
+      <tr><td>Drag to reorder</td><td>Sort slides by dragging in the admin panel</td></tr>
+      <tr><td>Shortcode support</td><td>Use <code>[achrag_responsive_slider]</code> anywhere in your content</td></tr>
+      <tr><td>Front page auto-render</td><td>Optionally renders automatically on the front page (SWELL theme)</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section">License</h2>
+  <p style="color: var(--text-muted); font-size: 0.92rem;">GPL v2 — Free to use, modify, and distribute.</p>
+</Layout>
