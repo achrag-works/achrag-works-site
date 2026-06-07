@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="Payment Complete" description="Thank you for your purchase">
+  <style>
+    .success-wrap { text-align: center; padding: 4rem 1rem; }
+    .icon { font-size: 4rem; margin-bottom: 1.5rem; }
+    h1 { font-size: 1.8rem; font-weight: 300; margin-bottom: 1rem; }
+    p { color: var(--text-muted); line-height: 1.8; margin-bottom: 0.5rem; }
+    .back { display: inline-block; margin-top: 2rem; color: var(--accent); text-decoration: none; font-size: 0.95rem; }
+  </style>
+  <div class="success-wrap">
+    <div class="icon">✅</div>
+    <h1>Payment Received</h1>
+    <p>Thank you! Your license key will be sent to your email once the payment is confirmed.</p>
+    <p>Cryptocurrency payments typically confirm within a few minutes.</p>
+    <a href="/plugins" class="back">← Back to Plugins</a>
+  </div>
+</Layout>
