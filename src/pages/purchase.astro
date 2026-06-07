@@ -1,0 +1,153 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Purchase License" description="ACHRAG Plugins — Annual License $50 USD via cryptocurrency">
+  <style>
+    h1 { font-size: 1.8rem; font-weight: 400; margin-bottom: 0.3rem; }
+    .subtitle { color: var(--text-muted); margin-bottom: 3rem; }
+    .plan-box {
+      background: #121d3b;
+      border: 1px solid #1e2d55;
+      border-radius: 10px;
+      padding: 2rem;
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+    }
+    .plan-box h2 { font-size: 1.1rem; font-weight: 500; margin-bottom: 1rem; color: #a0b8d8; letter-spacing: 0.05em; }
+    .price { font-size: 2.5rem; font-weight: 300; color: #fff; margin-bottom: 0.3rem; }
+    .price span { font-size: 1rem; color: var(--text-muted); }
+    .features { list-style: none; padding: 0; margin: 1.5rem 0; }
+    .features li { padding: 0.4rem 0; color: #a0b8d8; font-size: 0.95rem; }
+    .features li::before { content: "✓ "; color: var(--accent); }
+    .btn-pay {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+    }
+    .btn-pay:hover { opacity: 0.85; }
+    .form-row { margin-bottom: 1.2rem; }
+    .form-row label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem; }
+    .form-row input {
+      width: 100%;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 0.6rem 0.9rem;
+      color: var(--text);
+      font-size: 0.95rem;
+      box-sizing: border-box;
+    }
+    .how-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem 2rem;
+      max-width: 520px;
+      margin-bottom: 2rem;
+    }
+    .how-box h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; letter-spacing: 0.05em; }
+    .step { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1rem; }
+    .step-num { background: var(--accent); color: #fff; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+    .step p { margin: 0; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+    #result { display: none; margin-top: 1.5rem; padding: 1.2rem; border-radius: 6px; }
+    #result.success { background: #1b3a2a; border: 1px solid #2e7d32; color: #81c784; }
+    #result.error { background: #3a1b1b; border: 1px solid #c62828; color: #ef9a9a; }
+    .coins { font-size: 0.82rem; color: var(--text-muted); margin-top: 1rem; }
+  </style>
+
+  <h1>🔑 Plugin License</h1>
+  <p class="subtitle">All ACHRAG WordPress plugins — one license covers all</p>
+
+  <div class="plan-box">
+    <h2>ANNUAL LICENSE</h2>
+    <div class="price">$50 <span>USD / year</span></div>
+    <ul class="features">
+      <li>All 3 ACHRAG plugins included</li>
+      <li>1 year from purchase date</li>
+      <li>Unlimited domains</li>
+      <li>Pay with cryptocurrency</li>
+    </ul>
+
+    <div class="form-row">
+      <label for="pay-email">Your Email (for license delivery)</label>
+      <input type="email" id="pay-email" placeholder="you@example.com" required>
+    </div>
+
+    <button class="btn-pay" id="btn-pay" onclick="startPayment()">💳 Pay with Crypto</button>
+    <div class="coins">Accepted: BTC · ETH · LTC · TRX · TON · BNB · USDT(TRX/ETH) · USDC · PYUSD</div>
+
+    <div id="result"></div>
+  </div>
+
+  <div class="how-box">
+    <h2>HOW IT WORKS</h2>
+    <div class="step"><div class="step-num">1</div><p>Enter your email and click "Pay with Crypto". You'll be redirected to a NOWPayments checkout page.</p></div>
+    <div class="step"><div class="step-num">2</div><p>Choose your preferred cryptocurrency and complete the payment.</p></div>
+    <div class="step"><div class="step-num">3</div><p>Once confirmed, your license key will be sent to your email automatically.</p></div>
+    <div class="step"><div class="step-num">4</div><p>In WordPress: go to Settings → [Plugin Name] License, enter the key, and click "Authenticate".</p></div>
+  </div>
+
+  <script>
+    async function startPayment() {
+      const email = document.getElementById('pay-email').value.trim();
+      const result = document.getElementById('result');
+      const btn = document.getElementById('btn-pay');
+
+      if (!email || !email.includes('@')) {
+        result.className = 'error';
+        result.style.display = 'block';
+        result.textContent = 'Please enter a valid email address.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Creating payment...';
+      result.style.display = 'none';
+
+      try {
+        const res = await fetch('https://api.nowpayments.io/v1/payment', {
+          method: 'POST',
+          headers: {
+            'x-api-key': 'R33B31J-N7VMVW8-PPQN1QJ-P468GTN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            price_amount: 50,
+            price_currency: 'usd',
+            order_description: email,
+            order_id: 'ACHRAG-' + Date.now(),
+            ipn_callback_url: 'https://achrag-license.igarikawa.workers.dev/webhook',
+            success_url: 'https://works.achrag.com/purchase/success',
+            cancel_url: 'https://works.achrag.com/purchase',
+          }),
+        });
+
+        const data = await res.json();
+
+        if (data.payment_url || data.invoice_url) {
+          window.location.href = data.payment_url || data.invoice_url;
+        } else if (data.payment_id) {
+          // payment_urlがない場合はNOWPaymentsの支払いページへ
+          window.location.href = `https://nowpayments.io/payment/?iid=${data.payment_id}`;
+        } else {
+          throw new Error(data.message || 'Payment creation failed');
+        }
+
+      } catch (e) {
+        result.className = 'error';
+        result.style.display = 'block';
+        result.textContent = 'Error: ' + e.message;
+        btn.disabled = false;
+        btn.textContent = '💳 Pay with Crypto';
+      }
+    }
+  </script>
+</Layout>
