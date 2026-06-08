@@ -2,8 +2,17 @@
 interface Props {
   title: string;
   description?: string;
+  noCache?: boolean;
 }
-const { title, description = "ACHRAG Works — WordPress plugins by ACHRAG" } = Astro.props;
+const { title, description = "ACHRAG Works — WordPress plugins by ACHRAG", noCache = false } = Astro.props;
+
+// /mypage/* は強制的にno-cache
+const isMyPage = Astro.url.pathname.startsWith('/mypage');
+if (isMyPage || noCache) {
+  Astro.response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+  Astro.response.headers.set('Pragma', 'no-cache');
+  Astro.response.headers.set('Surrogate-Control', 'no-store');
+}
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +21,13 @@ const { title, description = "ACHRAG Works — WordPress plugins by ACHRAG" } = 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
   <title>{title} | ACHRAG Works</title>
+  {(isMyPage || noCache) && (
+    <>
+      <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+      <meta http-equiv="Pragma" content="no-cache" />
+      <meta http-equiv="Expires" content="0" />
+    </>
+  )}
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
   <link rel="shortcut icon" href="/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -96,6 +112,7 @@ const { title, description = "ACHRAG Works — WordPress plugins by ACHRAG" } = 
     <a href="/" class="logo"><img src="/achrag-icon.png" alt="ACHRAG" style="height:24px;width:24px;vertical-align:middle;margin-right:0.5rem;" />ACHRAG <span>Works</span></a>
     <nav>
       <a href="/plugins">Plugins</a>
+      <a href="/mypage">My Page</a>
       <a href="/ja">日本語</a>
       <a href="https://www.achrag.org/" target="_blank">ACHRAG.org</a>
       <a href="https://github.com/achrag-works" target="_blank">GitHub</a>
