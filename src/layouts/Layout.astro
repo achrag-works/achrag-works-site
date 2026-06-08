@@ -6,7 +6,6 @@ interface Props {
 }
 const { title, description = "ACHRAG Works — WordPress plugins by ACHRAG", noCache = false } = Astro.props;
 
-// /mypage/* は強制的にno-cache
 const isMyPage = Astro.url.pathname.startsWith('/mypage');
 if (isMyPage || noCache) {
   Astro.response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
@@ -115,7 +114,7 @@ if (isMyPage || noCache) {
       <a href="/mypage/register">Register</a>
       <a href="/mypage">My Page</a>
       <a href="/plugins">Plugins</a>
-      <a href="/ja">日本語</a>
+      <a href="/ja">&#26085;&#26412;&#35486;</a>
       <a href="https://www.achrag.org/" target="_blank">ACHRAG.org</a>
       <a href="https://github.com/achrag-works" target="_blank">GitHub</a>
     </nav>
@@ -124,4 +123,7 @@ if (isMyPage || noCache) {
     <slot />
   </main>
   <footer>
-    <p>&copy; 2026 <a href="https://www.achrag.org/">ACHRAG</a> — Advanced
+    <p>&copy; 2026 <a href="https://www.achrag.org/">ACHRAG</a> &mdash; Advanced Civilizational Heritage Research &amp; Analysis Group</p>
+  </footer>
+</body>
+</html>
