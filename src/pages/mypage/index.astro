@@ -1,0 +1,283 @@
+---
+import Layout from '../../layouts/Layout.astro';
+const AUTH_BASE = 'https://auth.achrag.dev';
+---
+<Layout title="My Page">
+<style>
+  .page-label { font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:0.5rem; }
+  .page-title { font-size:1.6rem; font-weight:300; margin-bottom:0.25rem; }
+  .page-email { color:var(--text-muted); font-size:0.9rem; margin-bottom:2.5rem; }
+
+  .section-title { font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid #1a2a1a; }
+
+  .license-card { background:#060f06; border:1px solid #1a2a1a; border-radius:6px; padding:1.25rem 1.5rem; margin-bottom:1rem; }
+  .license-key { font-family:monospace; font-size:0.85rem; color:var(--accent3); margin-bottom:0.5rem; }
+  .license-meta { display:flex; gap:1.5rem; flex-wrap:wrap; font-size:0.82rem; color:var(--text-muted); margin-bottom:0.75rem; }
+  .license-meta span { display:flex; align-items:center; gap:0.3rem; }
+  .badge { display:inline-block; font-size:0.7rem; padding:0.15rem 0.6rem; border-radius:3px; font-weight:500; }
+  .badge-active   { background:#0a2a0a; color:#7ec87e; border:1px solid #1a4a1a; }
+  .badge-expired  { background:#1a1a1a; color:#888; border:1px solid #333; }
+  .badge-cancelled{ background:#2a1a0a; color:#c8a07e; border:1px solid #4a2a1a; }
+
+  .license-actions { display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:0.75rem; }
+  .btn-sm { font-size:0.78rem; padding:0.35rem 0.9rem; border-radius:3px; border:1px solid #1a2a1a; background:transparent; color:var(--link); cursor:pointer; font-family:inherit; transition:all 0.2s; }
+  .btn-sm:hover { border-color:var(--accent); color:var(--accent); }
+  .btn-sm.danger { color:#c87e7e; }
+  .btn-sm.danger:hover { border-color:#c87e7e; }
+
+  .empty-state { text-align:center; padding:3rem 1rem; color:var(--text-muted); }
+  .empty-state p { margin-bottom:1rem; }
+  .btn-primary { display:inline-block; background:var(--accent); color:white; border:none; border-radius:4px; padding:0.6rem 1.5rem; font-size:0.9rem; font-family:inherit; cursor:pointer; text-decoration:none; transition:opacity 0.2s; }
+  .btn-primary:hover { opacity:0.85; }
+
+  .danger-zone { margin-top:3rem; padding-top:1.5rem; border-top:1px solid #2a0a0a; }
+  .logout-btn { background:transparent; border:1px solid #1a2a1a; color:var(--text-muted); border-radius:4px; padding:0.5rem 1.25rem; font-size:0.85rem; font-family:inherit; cursor:pointer; transition:all 0.2s; }
+  .logout-btn:hover { border-color:#c87e7e; color:#c87e7e; }
+
+  /* モーダル */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:100; align-items:center; justify-content:center; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:#060f06; border:1px solid #1a2a1a; border-radius:8px; padding:2rem; max-width:400px; width:90%; }
+  .modal h3 { font-size:1rem; font-weight:500; margin-bottom:0.5rem; }
+  .modal p { font-size:0.88rem; color:var(--text-muted); margin-bottom:1.25rem; }
+  .modal input { width:100%; background:#000b00; border:1px solid #1a2a1a; border-radius:4px; padding:0.6rem 0.9rem; color:var(--text); font-size:0.9rem; font-family:inherit; outline:none; margin-bottom:0.75rem; }
+  .modal input:focus { border-color:var(--accent); }
+  .modal-actions { display:flex; gap:0.75rem; justify-content:flex-end; }
+  .btn-cancel { background:transparent; border:1px solid #1a2a1a; color:var(--text-muted); border-radius:4px; padding:0.5rem 1rem; font-size:0.85rem; font-family:inherit; cursor:pointer; }
+  .btn-confirm { background:var(--accent); color:white; border:none; border-radius:4px; padding:0.5rem 1rem; font-size:0.85rem; font-family:inherit; cursor:pointer; }
+  .btn-confirm:disabled { opacity:0.5; cursor:not-allowed; }
+  .btn-confirm.danger { background:#8b2020; }
+
+  .msg { padding:0.65rem 1rem; border-radius:4px; font-size:0.85rem; margin-bottom:1rem; display:none; }
+  .msg.success { background:#0a1f0a; border:1px solid #1a4a1a; color:#7ec87e; display:block; }
+  .msg.error   { background:#1f0a0a; border:1px solid #4a1a1a; color:#c87e7e; display:block; }
+
+  .loading { text-align:center; padding:4rem; color:var(--text-muted); }
+</style>
+
+<!-- ローディング中 -->
+<div id="loading" class="loading">読み込み中...</div>
+
+<!-- メインコンテンツ（JS描画） -->
+<div id="main" style="display:none;">
+  <div class="page-label">My Page</div>
+  <h1 class="page-title" id="user-greeting">マイページ</h1>
+  <p class="page-email" id="user-email"></p>
+
+  <div id="msg" class="msg"></div>
+
+  <!-- ライセンス一覧 -->
+  <div class="section-title">保有ライセンス</div>
+  <div id="license-list"></div>
+
+  <!-- ログアウト -->
+  <div class="danger-zone">
+    <button class="logout-btn" id="logout-btn">ログアウト</button>
+  </div>
+</div>
+
+<!-- ドメイン変更モーダル -->
+<div class="modal-overlay" id="modal-domain">
+  <div class="modal">
+    <h3>ドメイン変更</h3>
+    <p>新しいWordPressサイトのドメインを入力してください。<br>変更は年1回までです。</p>
+    <div id="modal-msg" class="msg"></div>
+    <input type="text" id="domain-input" placeholder="example.com" />
+    <div class="modal-actions">
+      <button class="btn-cancel" id="domain-cancel">キャンセル</button>
+      <button class="btn-confirm" id="domain-confirm">変更する</button>
+    </div>
+  </div>
+</div>
+
+<!-- 解約確認モーダル -->
+<div class="modal-overlay" id="modal-cancel">
+  <div class="modal">
+    <h3>ライセンス解約</h3>
+    <p id="cancel-desc">このライセンスを解約します。有効期限まで引き続き利用できます。<br>この操作は取り消せません。</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="cancel-close">キャンセル</button>
+      <button class="btn-confirm danger" id="cancel-confirm">解約する</button>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ AUTH_BASE }}>
+  let currentLicenseKey = null;
+
+  function formatExpiry(isoStr) {
+    const d = new Date(isoStr);
+    // D1のUTC日付（YYYY-MM-DD）はJST 23:59に合わせる
+    const jst = new Date(d.getTime());
+    const date = jst.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo', year: 'numeric', month: 'long', day: 'numeric' });
+    return `${date} 23:59 (JST)`;
+  }
+
+  async function init() {
+    // ログイン確認
+    let me, licenses;
+    try {
+      const res = await fetch(`${AUTH_BASE}/me`, { credentials: 'include' });
+      if (!res.ok) { window.location.href = '/mypage/login'; return; }
+      me = (await res.json()).user;
+    } catch {
+      window.location.href = '/mypage/login';
+      return;
+    }
+
+    // ライセンス取得
+    try {
+      const res = await fetch(`${AUTH_BASE}/licenses`, { credentials: 'include' });
+      licenses = (await res.json()).licenses || [];
+    } catch {
+      licenses = [];
+    }
+
+    // 描画
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('main').style.display = 'block';
+    document.getElementById('user-greeting').textContent = 'ようこそ';
+    document.getElementById('user-email').textContent = me.email;
+
+    renderLicenses(licenses);
+  }
+
+  function renderLicenses(licenses) {
+    const list = document.getElementById('license-list');
+    if (!licenses.length) {
+      list.innerHTML = `
+        <div class="empty-state">
+          <p>保有ライセンスはありません。</p>
+          <a href="/purchase" class="btn-primary">プラグインを購入する</a>
+        </div>`;
+      return;
+    }
+
+    list.innerHTML = licenses.map(lic => {
+      const expires = lic.expires_at ? formatExpiry(lic.expires_at) : '—';
+      const isActive  = lic.status === 'active' && !lic.cancelled_at && new Date(lic.expires_at) > new Date();
+      const isCancelled = !!lic.cancelled_at;
+      const badgeClass = isCancelled ? 'badge-cancelled' : (isActive ? 'badge-active' : 'badge-expired');
+      const badgeLabel = isCancelled ? '解約済み' : (isActive ? '有効' : '期限切れ');
+
+      const domainChanged = lic.domain_changed_at ? new Date(lic.domain_changed_at) : null;
+      const canChangeDomain = isActive && (!domainChanged || (new Date() - domainChanged) > 365 * 24 * 60 * 60 * 1000);
+
+      return `
+        <div class="license-card">
+          <div class="license-key">${lic.license_key} <span class="badge ${badgeClass}">${badgeLabel}</span></div>
+          <div class="license-meta">
+            <span>🔌 ${lic.plugin_name || '—'}</span>
+            <span>🌐 ${lic.domain || '未設定'}</span>
+            <span>📅 ${expires}まで</span>
+          </div>
+          ${isActive ? `
+          <div class="license-actions">
+            ${canChangeDomain
+              ? `<button class="btn-sm" onclick="openDomain('${lic.license_key}')">ドメイン変更</button>`
+              : `<button class="btn-sm" disabled title="年1回まで">ドメイン変更（変更済み）</button>`
+            }
+            ${!isCancelled ? `<button class="btn-sm danger" onclick="openCancel('${lic.license_key}', '${lic.expires_at}')">解約</button>` : ''}
+          </div>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  // ドメイン変更モーダル
+  window.openDomain = (key) => {
+    currentLicenseKey = key;
+    document.getElementById('domain-input').value = '';
+    document.getElementById('modal-msg').className = 'msg';
+    document.getElementById('modal-domain').classList.add('open');
+  };
+  document.getElementById('domain-cancel').onclick = () => {
+    document.getElementById('modal-domain').classList.remove('open');
+  };
+  document.getElementById('domain-confirm').onclick = async () => {
+    const domain  = document.getElementById('domain-input').value.trim().replace(/^https?:\/\//, '').replace(/\/$/, '');
+    const msgEl   = document.getElementById('modal-msg');
+    const btn     = document.getElementById('domain-confirm');
+    if (!domain) { msgEl.className='msg error'; msgEl.textContent='ドメインを入力してください。'; return; }
+    btn.disabled = true;
+    btn.textContent = '変更中...';
+    try {
+      const res  = await fetch(`${AUTH_BASE}/licenses/${currentLicenseKey}/change-domain`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ domain }), credentials: 'include',
+      });
+      const data = await res.json();
+      if (res.ok) {
+        document.getElementById('modal-domain').classList.remove('open');
+        showMsg('success', 'ドメインを変更しました。');
+        setTimeout(() => location.reload(), 1500);
+      } else {
+        const errMap = {
+          domain_change_limit: '年1回の変更制限に達しています。',
+          invalid_domain: 'ドメインの形式が正しくありません。',
+          license_not_found: 'ライセンスが見つかりません。',
+        };
+        msgEl.className = 'msg error';
+        msgEl.textContent = errMap[data.error] || `エラー: ${data.error}`;
+        btn.disabled = false;
+        btn.textContent = '変更する';
+      }
+    } catch {
+      msgEl.className = 'msg error';
+      msgEl.textContent = 'ネットワークエラー。';
+      btn.disabled = false;
+      btn.textContent = '変更する';
+    }
+  };
+
+  // 解約モーダル
+  window.openCancel = (key, expiresAt) => {
+    currentLicenseKey = key;
+    const exp = expiresAt ? formatExpiry(expiresAt) : '';
+    document.getElementById('cancel-desc').textContent =
+      `このライセンスを解約します。${exp}まで引き続き利用できます。この操作は取り消せません。`;
+    document.getElementById('modal-cancel').classList.add('open');
+  };
+  document.getElementById('cancel-close').onclick = () => {
+    document.getElementById('modal-cancel').classList.remove('open');
+  };
+  document.getElementById('cancel-confirm').onclick = async () => {
+    const btn = document.getElementById('cancel-confirm');
+    btn.disabled = true;
+    btn.textContent = '解約中...';
+    try {
+      const res  = await fetch(`${AUTH_BASE}/licenses/${currentLicenseKey}/cancel`, {
+        method: 'POST', credentials: 'include',
+      });
+      const data = await res.json();
+      if (res.ok) {
+        document.getElementById('modal-cancel').classList.remove('open');
+        showMsg('success', 'ライセンスを解約しました。');
+        setTimeout(() => location.reload(), 1500);
+      } else {
+        showMsg('error', `エラー: ${data.error}`);
+        document.getElementById('modal-cancel').classList.remove('open');
+        btn.disabled = false;
+        btn.textContent = '解約する';
+      }
+    } catch {
+      showMsg('error', 'ネットワークエラー。');
+      btn.disabled = false;
+      btn.textContent = '解約する';
+    }
+  };
+
+  // ログアウト
+  document.getElementById('logout-btn').onclick = async () => {
+    await fetch(`${AUTH_BASE}/logout`, { method: 'POST', credentials: 'include' });
+    window.location.href = '/mypage/login';
+  };
+
+  function showMsg(type, text) {
+    const el = document.getElementById('msg');
+    el.className = `msg ${type}`;
+    el.textContent = text;
+  }
+
+  init();
+</script>
+</Layout>
