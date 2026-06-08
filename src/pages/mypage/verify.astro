@@ -1,0 +1,80 @@
+---
+import Layout from '../../layouts/Layout.astro';
+const AUTH_BASE = 'https://auth.achrag.dev';
+---
+<Layout title="Email Verification">
+<style>
+  .verify-wrap { max-width:480px; margin:5rem auto; text-align:center; }
+  .icon { font-size:3rem; margin-bottom:1.5rem; }
+  .auth-label { font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:0.75rem; }
+  .verify-title { font-size:1.8rem; font-weight:300; margin-bottom:1rem; }
+  .verify-sub { color:var(--text-muted); font-size:0.95rem; margin-bottom:2.5rem; line-height:1.8; }
+  .btn-primary { display:inline-block; background:var(--accent); color:white; border:none; border-radius:4px; padding:0.75rem 2.5rem; font-size:0.95rem; font-family:inherit; cursor:pointer; text-decoration:none; transition:opacity 0.2s; }
+  .btn-primary:hover { opacity:0.85; }
+  .btn-ghost { display:inline-block; color:var(--link); font-size:0.9rem; text-decoration:none; margin-top:1.25rem; }
+  .spinner { display:inline-block; width:2rem; height:2rem; border:2px solid #1a2a1a; border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; margin-bottom:1.5rem; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .status-pending .icon-ok  { display:none; }
+  .status-pending .icon-ng  { display:none; }
+  .status-ok .spinner       { display:none; }
+  .status-ok .icon-ng       { display:none; }
+  .status-ng .spinner       { display:none; }
+  .status-ng .icon-ok       { display:none; }
+</style>
+
+<div class="verify-wrap status-pending" id="wrap">
+  <div class="auth-label">My Page</div>
+  <div class="spinner"></div>
+  <div class="icon icon-ok">✅</div>
+  <div class="icon icon-ng">⚠️</div>
+
+  <h1 class="verify-title" id="title">メールアドレスを確認中...</h1>
+  <p class="verify-sub" id="sub">しばらくお待ちください。</p>
+  <div id="actions"></div>
+</div>
+
+<script define:vars={{ AUTH_BASE }}>
+  const wrap    = document.getElementById('wrap');
+  const title   = document.getElementById('title');
+  const sub     = document.getElementById('sub');
+  const actions = document.getElementById('actions');
+
+  const params = new URLSearchParams(window.location.search);
+  const token  = params.get('token');
+
+  async function verify() {
+    if (!token) {
+      setError('URLが正しくありません。', 'メール内のリンクをクリックしてください。');
+      return;
+    }
+    try {
+      const res  = await fetch(`${AUTH_BASE}/verify?token=${encodeURIComponent(token)}`, { credentials:'include' });
+      const data = await res.json();
+      if (res.ok) {
+        wrap.className = 'verify-wrap status-ok';
+        title.textContent = '認証が完了しました';
+        sub.textContent   = 'アカウントが有効になりました。ログインしてライセンス管理をはじめましょう。';
+        actions.innerHTML = '<a href="/mypage/login" class="btn-primary">ログインする</a>';
+      } else {
+        const errMap = {
+          invalid_token:  'このリンクは無効です。',
+          expired_token:  'リンクの有効期限が切れています。再登録してください。',
+          already_used:   'このリンクはすでに使用済みです。',
+        };
+        setError(errMap[data.error] || '認証に失敗しました。', 'お手数ですが再度お試しください。');
+      }
+    } catch {
+      setError('ネットワークエラーが発生しました。', 'インターネット接続を確認してください。');
+    }
+  }
+
+  function setError(t, s) {
+    wrap.className = 'verify-wrap status-ng';
+    title.textContent = t;
+    sub.textContent   = s;
+    actions.innerHTML = '<a href="/mypage/register" class="btn-primary">新規登録へ戻る</a><br><a href="/mypage/login" class="btn-ghost">ログインページへ</a>';
+  }
+
+  verify();
+</script>
+</Layout>
