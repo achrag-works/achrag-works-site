@@ -1,0 +1,126 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="What's New">
+  <style>
+    .page-header {
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .page-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .page-header h1 {
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+    }
+    .page-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .news-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .news-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .news-table tbody tr:hover {
+      background: #040f04;
+    }
+    .news-table td {
+      padding: 1.1rem 0.5rem;
+      vertical-align: top;
+    }
+    .td-date {
+      width: 7rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+    .td-tag {
+      width: 7rem;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+    .tag-infra  { background: #0d2040; color: #78b4e0; }
+    .tag-plugin { background: #1a0d30; color: #b094e8; }
+    .tag-tool   { background: #0d2510; color: #6ec87a; }
+    .tag-domain { background: #2a1800; color: #d4a040; }
+    .td-title a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .td-title a:hover { color: var(--accent); }
+    .td-body {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+    }
+  </style>
+
+  <div class="page-header">
+    <p class="page-label">ACHRAG Works</p>
+    <h1>What's New</h1>
+    <p>Updates, releases, and infrastructure changes.</p>
+  </div>
+
+  <table class="news-table">
+    <tbody>
+      <tr>
+        <td class="td-date">2026-06-09</td>
+        <td class="td-tag"><span class="tag tag-domain">Domain</span></td>
+        <td class="td-title">
+          <div>ソフトウェア部門ドメインを achrag.dev に統一</div>
+          <div class="td-body">works.achrag.dev / auth.achrag.dev / api.achrag.dev — すべての開発向けサブドメインを .dev 配下に集約。</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="td-date">2026-06-08</td>
+        <td class="td-tag"><span class="tag tag-infra">Infra</span></td>
+        <td class="td-title">
+          <div>ライセンスシステム認証基盤 (auth.achrag.dev) 稼働開始</div>
+          <div class="td-body">Resend APIによるメール送信、Honeypot方式のBot対策を実装。本番 / Staging 両 Worker デプロイ完了。</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="td-date">2026-06-06</td>
+        <td class="td-tag"><span class="tag tag-tool">Tool</span></td>
+        <td class="td-title">
+          <div>Gemini Audio MCP — ACHRAGユニット全員が音声理解可能に</div>
+          <div class="td-body">analyze_audio / open_audio コマンドを実装。Master作品ファイルをMCPから直接解析できる環境を整備。</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="td-date">2026-06-04</td>
+        <td class="td-tag"><span class="tag tag-tool">Tool</span></td>
+        <td class="td-title">
+          <div>ローカル音楽分析MCP リリース — Librosa + Ollama 4モード対応</div>
+          <div class="td-body">WAV高速化・一般分析/霊響分析の4モードをサポート。次フェーズはOBS連携・Firebase統合。</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="td-date">2026-05-18</td>
+        <td class="td-tag"><span class="tag tag-infra">Infra</span></td>
+        <td class="td-title">
+          <div>Scout Cloud Run Job デプロイ完了 — 毎週月曜自動実行</div>
+          <div class="td-body">GCP Cloud Run Jobs + Cloud Scheduler による定期実行パイプラインを稼働。</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</Layout>
