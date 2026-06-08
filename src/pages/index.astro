@@ -76,7 +76,6 @@ import Layout from '../layouts/Layout.astro';
     .about h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.75rem; }
     .about p { color: var(--text-muted); font-size: 0.92rem; }
     .about a { color: var(--accent); }
-    /* What's New */
     .news-list {
       list-style: none;
       padding: 0;
@@ -124,15 +123,58 @@ import Layout from '../layouts/Layout.astro';
     <p class="hero-label">ACHRAG Works</p>
     <h1>Tools for Japanese<br>Classical Publishing</h1>
     <p>Free WordPress plugins crafted by ACHRAG for sites that honor the elegance of classical Japanese prose.</p>
-    <a href="/plugins" class="hero-btn">View Plugins →</a>
+    <a href="/plugins" class="hero-btn">View Plugins</a>
   </section>
 
   <p class="section-title">What's New</p>
   <ul class="news-list">
     <li>
       <span class="news-date">2026-06-09</span>
-      <a href="/news" class="news-title">ソフトウェア部門ドメインをachrag.devに統一</a>
+      <a href="/news" class="news-title">Software domain unified under achrag.dev</a>
     </li>
     <li>
       <span class="news-date">2026-06-08</span>
-      <a hr
+      <a href="/news" class="news-title">License system auth infrastructure (auth.achrag.dev) launched</a>
+    </li>
+    <li>
+      <span class="news-date">2026-06-06</span>
+      <a href="/news" class="news-title">Gemini Audio MCP released</a>
+    </li>
+    <li>
+      <span class="news-date">2026-06-04</span>
+      <a href="/news" class="news-title">Local music analysis MCP released</a>
+    </li>
+    <li>
+      <span class="news-date">2026-05-18</span>
+      <a href="/news" class="news-title">Scout Cloud Run Job deployed</a>
+    </li>
+  </ul>
+  <a href="/news" class="read-more">Read more</a>
+
+  <p class="section-title" style="margin-top:3rem;">Featured Plugin</p>
+  <div class="plugin-card">
+    <div class="plugin-icon">&#28450;</div>
+    <div>
+      <h2>ACHRAG Kanji Number Converter</h2>
+      <p>Automatically converts Arabic numerals in post titles and content into traditional Japanese Kanji numerals. Supports standard and formal Daiji styles.</p>
+      <div>
+        <span class="tag">WordPress</span>
+        <span class="tag">Japanese</span>
+        <span class="tag">Free</span>
+        <span class="tag">GPL v2</span>
+      </div>
+      <a href="/plugins/kanji-converter" class="card-link">Learn more</a>
+    </div>
+  </div>
+
+  <div class="about">
+    <div>
+      <h3>About ACHRAG Works</h3>
+      <p>A collection of free, open-source WordPress plugins developed internally by ACHRAG for our Japanese-language publications. Released publicly for anyone who shares our appreciation for classical Japanese typography.</p>
+    </div>
+    <div>
+      <h3>Open Source</h3>
+      <p>All plugins are released under GPL v2. Source code is available on <a href="https://github.com/achrag-works">GitHub</a>. Contributions and feedback are welcome.</p>
+    </div>
+  </div>
+</Layout>
