@@ -1,179 +1,56 @@
 ---
-import Layout from '../layouts/Layout.astro';
+export const prerender = true;
 ---
-<Layout title="Home">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ACHRAG Engineering Division</title>
   <style>
-    .hero {
-      text-align: center;
-      padding: 4rem 0 3rem;
-      border-bottom: 1px solid var(--border);
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      background: #0a0a0a;
+      color: #e8e4de;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container { text-align: center; padding: 2rem; }
+    .org {
+      font-size: 11px;
+      letter-spacing: 0.35em;
+      color: #5a5248;
+      text-transform: uppercase;
       margin-bottom: 3rem;
     }
-    .hero-label {
-      font-size: 0.8rem;
+    .title {
+      font-size: 15px;
       letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
+      color: #c8c0b4;
       margin-bottom: 1rem;
+      font-weight: normal;
     }
-    .hero h1 {
-      font-size: 2.5rem;
-      font-weight: 300;
-      line-height: 1.3;
-      margin-bottom: 1rem;
-    }
-    .hero p {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      max-width: 600px;
-      margin: 0 auto 2rem;
-    }
-    .hero-btn {
-      display: inline-block;
-      background: var(--accent);
-      color: white;
-      padding: 0.75rem 2rem;
-      border-radius: 4px;
-      text-decoration: none;
-      font-size: 0.95rem;
-    }
-    .section-title {
-      font-size: 0.8rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-    }
-    .plugin-card {
-      background: #121d3b;
-      border: 1px solid #1e2d55;
-      border-radius: 8px;
-      padding: 2rem;
-      display: flex;
-      gap: 1.5rem;
-    }
-    .plugin-icon { font-size: 2.5rem; flex-shrink: 0; }
-    .plugin-card h2 { font-size: 1.2rem; font-weight: 500; margin-bottom: 0.5rem; }
-    .plugin-card p { color: #a0b8d8; font-size: 0.95rem; margin-bottom: 1rem; }
-    .tag {
-      display: inline-block;
-      background: var(--bg2);
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 3px;
-      margin-right: 0.4rem;
-    }
-    .card-link { color: var(--accent); font-size: 0.9rem; text-decoration: none; display: inline-block; margin-top: 1rem; font-weight: 500; }
-    .about {
-      margin-top: 4rem;
-      padding-top: 3rem;
-      border-top: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-    }
-    .about h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.75rem; }
-    .about p { color: var(--text-muted); font-size: 0.92rem; }
-    .about a { color: var(--accent); }
-    .news-list {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 1rem;
-      border-top: 1px solid var(--border);
-    }
-    .news-list li {
-      display: flex;
-      align-items: baseline;
-      gap: 1.2rem;
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .news-date {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .news-title {
-      color: var(--text);
-      font-size: 0.95rem;
-      text-decoration: none;
-    }
-    .news-title:hover { color: var(--accent); }
-    .read-more {
-      display: inline-block;
-      font-size: 0.85rem;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .read-more:hover { opacity: 0.8; }
-    @media (max-width: 600px) {
-      .hero h1 { font-size: 1.8rem; }
-      .about { grid-template-columns: 1fr; }
-      .plugin-card { flex-direction: column; }
-      .news-list li { flex-direction: column; gap: 0.3rem; }
+    .rule { width: 32px; height: 1px; background: #3a3430; margin: 2rem auto; }
+    .message {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: #4a4440;
+      line-height: 2.2;
     }
   </style>
-
-  <section class="hero">
-    <img src="/achrag-icon.png" alt="ACHRAG" style="height:72px;width:72px;margin-bottom:1.5rem;opacity:0.9;" />
-    <p class="hero-label">ACHRAG Works</p>
-    <h1>Niche Tools for Those<br>Who Demand the Difference</h1>
-    <p>Premium WordPress plugins, applications, and specialized services — crafted for users who find the market lacking.</p>
-    <a href="/plugins" class="hero-btn">View Products</a>
-  </section>
-
-  <p class="section-title">What's New</p>
-  <ul class="news-list">
-    <li>
-      <span class="news-date">2026-06-09</span>
-      <a href="/news" class="news-title">Software domain unified under achrag.dev</a>
-    </li>
-    <li>
-      <span class="news-date">2026-06-08</span>
-      <a href="/news" class="news-title">License system auth infrastructure (auth.achrag.dev) launched</a>
-    </li>
-    <li>
-      <span class="news-date">2026-06-06</span>
-      <a href="/news" class="news-title">Gemini Audio MCP released</a>
-    </li>
-    <li>
-      <span class="news-date">2026-06-04</span>
-      <a href="/news" class="news-title">Local music analysis MCP released</a>
-    </li>
-    <li>
-      <span class="news-date">2026-05-18</span>
-      <a href="/news" class="news-title">Scout Cloud Run Job deployed</a>
-    </li>
-  </ul>
-  <a href="/news" class="read-more">Read more</a>
-
-  <p class="section-title" style="margin-top:3rem;">Featured Product</p>
-  <div class="plugin-card">
-    <div class="plugin-icon">&#28450;</div>
-    <div>
-      <h2>ACHRAG Kanji Number Converter</h2>
-      <p>Converts Arabic numerals in WordPress post titles and content into traditional Japanese Kanji numerals. Supports standard and formal Daiji styles — a level of typographic precision unavailable anywhere else.</p>
-      <div>
-        <span class="tag">WordPress</span>
-        <span class="tag">Japanese</span>
-        <span class="tag">Premium</span>
-      </div>
-      <a href="/plugins/kanji-converter" class="card-link">Learn more</a>
-    </div>
+</head>
+<body>
+  <div class="container">
+    <p class="org">ACHRAG Engineering Division</p>
+    <p class="title">Under Maintenance</p>
+    <div class="rule"></div>
+    <p class="message">
+      We will be back shortly.<br>
+      ただいまメンテナンス中です。
+    </p>
   </div>
-
-  <div class="about">
-    <div>
-      <h3>About ACHRAG Works</h3>
-      <p>Everything here began the same way: we needed it, it did not exist, so we built it. ACHRAG Works develops and delivers niche products and services that the mainstream market does not offer — premium WordPress plugins, specialized applications, and AI-driven know-how services for users who demand precision.</p>
-    </div>
-    <div>
-      <h3>Who It Is For</h3>
-      <p>WordPress site owners with exacting standards, and AI practitioners with requirements that off-the-shelf tools cannot meet. If you have found that nothing on the market fits, you are in the right place.</p>
-    </div>
-  </div>
-</Layout>
+</body>
+</html>
