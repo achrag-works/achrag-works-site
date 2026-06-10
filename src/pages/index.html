@@ -279,6 +279,7 @@ function buildAurora() {
 const builders=[buildParticleField,buildWaveRings,buildSacredGeo,buildAurora];
 function clearViz(){vizObjects.forEach(o=>{const obj=o.pts||o.group;if(obj)scene.remove(obj);});vizObjects=[];}
 function setViz(idx){clearViz();currentViz=idx;vizObjects=[builders[idx]()];document.querySelectorAll('.viz-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));}
+document.querySelectorAll('.viz-btn').forEach(btn=>btn.addEventListener('click',()=>setViz(parseInt(btn.dataset.viz))));
 setViz(0);
 function animate(){
   requestAnimationFrame(animate);
