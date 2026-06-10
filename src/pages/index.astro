@@ -7,7 +7,7 @@ export const prerender = true;
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Under Maintenance — ACHRAG</title>
-<style>
+<style is:inline>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: #000; color: #e0d5c5; font-family: 'Courier New', monospace; overflow: hidden; width: 100vw; height: 100vh; }
   #canvas-wrap { position: fixed; inset: 0; z-index: 0; }
@@ -120,8 +120,8 @@ export const prerender = true;
 </div>
 <div id="footer-org">ACHRAG &mdash; Advanced Cryptographic Humanities Research &amp; Analysis Group</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script is:inline>
 console.log('COLONEL: script started');
 const WORKER = "https://achrag-music-gate.igarikawa.workers.dev";
 const audio = new Audio();
