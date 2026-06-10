@@ -71,6 +71,19 @@ export const prerender = true;
     background: rgba(255,255,255,0.1); border-radius: 2px; cursor: pointer;
   }
   #progress-bar { height: 100%; background: rgba(201,169,110,0.6); border-radius: 2px; width: 0%; transition: width 0.5s linear; pointer-events: none; }
+  #lang-toggle {
+    position: fixed; top: 18px; right: 22px; z-index: 20;
+    display: flex; align-items: center; gap: 6px;
+  }
+  #lang-toggle a {
+    font-size: 1.6rem; text-decoration: none; opacity: 0.45;
+    transition: opacity 0.2s; line-height: 1;
+  }
+  #lang-toggle a:hover { opacity: 1; }
+  #lang-toggle a.current { opacity: 1; cursor: default; pointer-events: none; }
+  #lang-toggle span {
+    font-size: 0.6rem; letter-spacing: 0.15em; color: rgba(201,169,110,0.35);
+  }
   #footer-org {
     position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
     font-size: 0.65rem; letter-spacing: 0.3em; color: #eaf4fc;
@@ -79,6 +92,11 @@ export const prerender = true;
 </style>
 </head>
 <body>
+<div id="lang-toggle">
+  <a href="/" class="current" title="English">🇺🇸</a>
+  <span>/</span>
+  <a href="/ja/" title="日本語">🇯🇵</a>
+</div>
 <div id="canvas-wrap"><canvas id="c"></canvas></div>
 <div id="header-area">
   <div id="music-credit">Music by ACHRAG Sacred Resonance Division.</div>
@@ -298,3 +316,4 @@ animate();
 </script>
 </body>
 </html>
+
